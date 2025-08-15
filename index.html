@@ -57,14 +57,21 @@
       }
 
     .navbar {
-        display: flex;
-        justify-content: center;
+        display: inline-block;
+        margin: 0 auto;
+        padding: 10px 20px;              
+        border-radius: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        border: 1px solid rgba(255, 255, 255, 0.3); /* subtle outline */
         font-family: "Doto"; /* Schriftart */
         font-weight: 900;
-        background-color: #111;
-        padding: 10px;
         text-align: center;
         transform:translateX(-400px);
+        align-self: start;
+        height:auto;
     }
 
     .navbar a {
