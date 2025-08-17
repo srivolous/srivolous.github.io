@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Home| SREERAG MANOJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=Doto:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio | Sreerag Manoj</title>
+<style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: black;
+      overflow-x: hidden;
+    }
+    .lcd {
+      font-family: "Doto";
+      font-weight: 900;
+      color: gold;
+      text-align: center;
+      letter-spacing: 1px;
+      text-shadow: 4px 4px 2px #6f8237;
+      transform: perspective(1200px) rotateX(30deg) rotateY(-20deg) rotateZ(20deg);
+      transform-origin: center;
+      
+      margin: 0 auto;
+      max-width: 90vw;
+      overflow-wrap: break-word;
+    }
+
+    .lcd .name {
+      font-size: clamp(24px, 8vw, 100px);
+      margin-top: 5vh;
+    }
+    #lcd {
+      font-size: clamp(18px, 6vw, 60px);
+      margin-top: 2vh;
+    }
+    #ikoons, .lcd .ikons {
+      font-size: clamp(16px, 5vw, 40px);
+      margin-top: 1vh;
+      white-space: pre-wrap;
+    }
+    .navbar {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 10px auto;
+        padding: 10px 20px;
+        border-radius: 15px;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-family: "Doto";
+        font-weight: 900;
+        text-align: center;
+    }
+    .navbar a {
+        font-family: "Doto";
+        font-weight: 900;
+        color: gold;
+        text-decoration: none;
+        margin: 5px 10px;
+        font-size: clamp(14px, 4vw, 20px);
+    }
+    .navbar a:hover {
+        text-decoration: underline;
+    }
+    table {
+        width: 100%;
+        border: 2px solid gold;
+        border-collapse: collapse;
+    }
+    td {
+        padding: 10px;
+        border: 1px solid gold;
+    }
+</style>
+</head>
+<body>
+<div class="lcd">
+<div class="name">-SREERAG MANOJ-</div>
+<div id="lcd">Loading Tempreture at Kakkanad... Please Wait</div>
+<div id="ikoons">Loading Weather... Please Wait</div>
+</div>
+<script>
+const apiKey = "7c697f4e6ebcc233b3f181c7ccb13e34";
+const city = "Kakkanad, IN";
+async function getWeather() {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+    );
+    const data = await response.json();
+    const temp = Math.round(data.main.temp);
+    document.getElementById("lcd").textContent = temp + "°C";
+    const condition = data.weather[0].main;
+    document.getElementById("ikoons").textContent = getIcon(condition);
+  } catch (error) {
+    document.getElementById("lcd").textContent = "ERR";
+  }
+}
+function getIcon(condition) {
+  switch(condition) {
+    case "Clear": return `--\n-      -\n:--  -++*+-  ---    CLEAR\n-=+%%%%%=-\n-- -%%%%%%%#- --\n:=%%%%%%=-\n---  -+**+-  ---\n-      -\n--`;
+    case "Clouds": return `::::::\n::    :::::\n::::        :::    CLOUDY\n::   ::::     :::\n::::::: ::::     ::\n:::::    :::    ::\n::::         ::::::\n::           ::\n:::::::::::::::`;
+    case "Rain": return `:::\n:::::::::::\n::::        :::   RAINING\n::   :::       ::::\n:::::    ::          ::\n::                   :::\n:::::::::::::::::::::\n:: ::::::::: :: ::\n:: :: :: ::  :: ::\n:::::::::::::`;
+    case "Thunderstorm": return `::::\n:::   :::::::\n::     :    ::   THUNDERSTORM\n::            :::\n::               :::\n::              :::\n:::::::::::::::\n:  :: :::  :\n::  :: ::::::  ::\n::  :::::  ::\n::`;
+    case "Snow": return "SNOW!";
+    case "Mist": return "MISTY!";
+    case "Fog": return "FOGGY";
+    default: return " ";
+  }
+}
+getWeather();
+setInterval(getWeather, 60000);
+</script>
+</body>
+</html>
