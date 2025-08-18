@@ -81,13 +81,54 @@
         padding: 10px;
         border: 1px solid gold;
     }
+
+
+.lcd-text {
+  font-family: "Doto";
+  font-weight: 900;
+  font-size: 100px;
+  color: gold;
+  position: relative;
+  z-index: 1;
+}
+
+.blend-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.blend-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: crtFlicker 0.15s infinite;
+  z-index: 2;
+}
+
+@keyframes crtFlicker {
+  0%   { opacity: 0.95; transform: scaleY(1.002); }
+  50%  { opacity: 1; transform: scaleY(0.998); }
+  100% { opacity: 0.97; transform: scaleY(1.001); }
+}
+
 </style>
 </head>
 <body>
+<div class="blend-wrap">
 <div class="lcd">
-<div class="name">-SREERAG MANOJ-</div>
+<div class="bg"></div>
+<div class="name">--SREERAG MANOJ--</div>
 <div id="lcd">Loading Tempreture at Kakkanad... Please Wait</div>
 <div id="ikoons">Loading Weather... Please Wait</div>
+<img src="assets/1.webp" class="blend-img">
+<img src="assets/S9CS.gif" class="blend-img">
+E
+</div>
 </div>
 <script>
 const apiKey = "7c697f4e6ebcc233b3f181c7ccb13e34";
@@ -109,7 +150,12 @@ async function getWeather() {
 function getIcon(condition) {
   switch(condition) {
     case "Clear": return `--\n-      -\n:--  -++*+-  ---    CLEAR\n-=+%%%%%=-\n-- -%%%%%%%#- --\n:=%%%%%%=-\n---  -+**+-  ---\n-      -\n--`;
-    case "Clouds": return `::::::\n::    :::::\n::::        :::    CLOUDY\n::   ::::     :::\n::::::: ::::     ::\n:::::    :::    ::\n::::         ::::::\n::           ::\n:::::::::::::::`;
+    case "Clouds": return `     .-~~~-.
+  .- ~ ~-(       )_ _
+ /                     ~ -. 
+|                           \
+ \                         .'
+   ~- . _____________ . -~ CLOUDY`;
     case "Rain": return `:::\n:::::::::::\n::::        :::   RAINING\n::   :::       ::::\n:::::    ::          ::\n::                   :::\n:::::::::::::::::::::\n:: ::::::::: :: ::\n:: :: :: ::  :: ::\n:::::::::::::`;
     case "Thunderstorm": return `::::\n:::   :::::::\n::     :    ::   THUNDERSTORM\n::            :::\n::               :::\n::              :::\n:::::::::::::::\n:  :: :::  :\n::  :: ::::::  ::\n::  :::::  ::\n::`;
     case "Snow": return "SNOW!";
