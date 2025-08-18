@@ -127,10 +127,29 @@
 <div id="ikoons">Loading Weather... Please Wait</div>
 <img src="assets/1.webp" class="blend-img">
 <img src="assets/S9CS.gif" class="blend-img">
-E
+<div id = "greeting">._.</div>
 </div>
 </div>
 <script>
+  function setGreeting() {
+  const now = new Date();
+  const hour = now.getHours();
+  let greeting;
+
+  if (hour < 12) {
+    greeting = "Good Morning, Visitor";
+  } else if (hour < 18) {
+    greeting = "Good Afternoon, Visitor";
+  } else if (hour < 22) {
+    greeting = "Good Evening, Visitor";
+  } else {
+    greeting = "Good Night, Visitor";
+  }
+
+  document.getElementById("greeting").textContent = greeting;
+}
+setGreeting();
+//AAAAAAAA
 const apiKey = "7c697f4e6ebcc233b3f181c7ccb13e34";
 const city = "Kakkanad, IN";
 async function getWeather() {
