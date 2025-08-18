@@ -93,7 +93,7 @@
 }
 
 .blend-wrap {
-  top: 10vh;
+  top: 2vh;
   position: relative;
   display: inline-block;
 }
@@ -110,6 +110,16 @@
   animation: crtFlicker 0.15s infinite;
   z-index: 2;
 }
+#news a {
+  color: gold;          /* or whatever you want */
+  text-decoration: none; /* remove underline */
+}
+
+#news a:hover {
+  color: orange;        /* hover color */
+  text-decoration: underline; 
+}
+
 
 @keyframes crtFlicker {
   0%   { opacity: 0.95; transform: scaleY(1.002); }
@@ -128,23 +138,43 @@
 <div id="ikoons">Loading Weather... Please Wait</div>
 <img src="assets/1.webp" class="blend-img">
 <img src="assets/S9CS.gif" class="blend-img">
+<div id="news"></div>
+---------------------------------------------
 <div id = "greeting">._.</div>
 </div>
 </div>
 <script>
+
+async function loadRSS() {
+const feed = "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en";
+const url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed);
+
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  let html = "<h2>---------------NEWS---------------</h2><ul>";
+  data.items.slice(0,5).forEach(item => {
+    html += `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`;
+  });
+  html += "</ul>";
+  document.getElementById("news").innerHTML = html;
+}
+loadRSS();
+
   function setGreeting() {
   const now = new Date();
   const hour = now.getHours();
   let greeting;
 
   if (hour < 12) {
-    greeting = "Good Morning, Visitor";
+    greeting = "[Good Morning, Visitor]";
   } else if (hour < 18) {
-    greeting = "Good Afternoon, Visitor";
+    greeting = "[Good Afternoon, Visitor]";
   } else if (hour < 22) {
-    greeting = "Good Evening, Visitor";
+    greeting = "[Good Evening, Visitor]";
   } else {
-    greeting = "Good Night, Visitor";
+    greeting = "[Good Night, Visitor]";
   }
 
   document.getElementById("greeting").textContent = greeting;
@@ -184,6 +214,7 @@ function getIcon(condition) {
     default: return " ";
   }
 }
+
 getWeather();
 setInterval(getWeather, 60000);
 </script>
