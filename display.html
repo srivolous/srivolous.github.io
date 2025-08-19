@@ -111,12 +111,12 @@
   z-index: 2;
 }
 #news a {
-  color: gold;          /* or whatever you want */
-  text-decoration: none; /* remove underline */
+  color: gold;          
+  text-decoration: none; 
 }
 
 #news a:hover {
-  color: orange;        /* hover color */
+  color: orange;        
   text-decoration: underline; 
 }
 
@@ -153,7 +153,7 @@ const url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent
   const res = await fetch(url);
   const data = await res.json();
 
-  let html = "<h2>---------------NEWS---------------</h2><ul>";
+  let html = "<h2>NEWS</h2><ul>";
   data.items.slice(0,5).forEach(item => {
     html += `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`;
   });
