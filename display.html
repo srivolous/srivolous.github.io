@@ -44,6 +44,7 @@
       font-size: clamp(16px, 5vw, 40px);
       margin-top: 1vh;
       white-space: pre-wrap;
+      color: white;
     }
     .navbar {
         display: flex;
@@ -110,12 +111,12 @@
   animation: crtFlicker 0.15s infinite;
   z-index: 2;
 }
-#news a {
-  color: gold;          
+#news-feed a {
+  color: rgb(0, 179, 255);          
   text-decoration: none; 
 }
 
-#news a:hover {
+#news-feed a:hover {
   color: orange;        
   text-decoration: underline; 
 }
@@ -138,29 +139,40 @@
 <div id="ikoons">Loading Weather... Please Wait</div>
 <img src="assets/1.webp" class="blend-img">
 <img src="assets/S9CS.gif" class="blend-img">
-<div id="news"></div>
+NEWS <br>
+<div id="news-feed"></div>
 ---------------------------------------------
 <div id = "greeting">._.</div>
 </div>
 </div>
 <script>
-
-async function loadRSS() {
-const feed = "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en";
+const feed = "https://dev.to/feed";
 const url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed);
 
+fetch(url)
+  .then(res => res.json())
+  .then(data => {
+    const items = data.items.slice(0, 10); // grab first 10 posts
+    const container = document.getElementById("news-feed");
+    let index = 0;
 
-  const res = await fetch(url);
-  const data = await res.json();
+    function showNext() {
+      const item = items[index];
+      container.innerHTML = `
+        <div class="news-card">
+          <a href="${item.link}" target="_blank">${item.title}</a>
+        </div>
+      `;
+      index = (index + 1) % items.length; // loop back to start
+    }
 
-  let html = "<h2>NEWS</h2><ul>";
-  data.items.slice(0,5).forEach(item => {
-    html += `<li><a href="${item.link}" target="_blank">${item.title}</a></li>`;
+    showNext(); // show first immediately
+    setInterval(showNext, 3000); // change every 3 seconds
+  })
+  .catch(err => {
+    console.error("Failed to load Dev.to feed", err);
+    document.getElementById("news-feed").textContent = "News unavailable.";
   });
-  html += "</ul>";
-  document.getElementById("news").innerHTML = html;
-}
-loadRSS();
 
   function setGreeting() {
   const now = new Date();
@@ -199,15 +211,18 @@ async function getWeather() {
 }
 function getIcon(condition) {
   switch(condition) {
-    case "Clear": return `--\n-      -\n:--  -++*+-  ---    CLEAR\n-=+%%%%%=-\n-- -%%%%%%%#- --\n:=%%%%%%=-\n---  -+**+-  ---\n-      -\n--`;
-    case "Clouds": return `     .-~~~-.
-  .- ~ ~-(       )_ _
- /                     ~ -. 
-|                           \
- \                         .'
-   ~- . _____________ . -~ CLOUDY`;
-    case "Rain": return `:::\n:::::::::::\n::::        :::   RAINING\n::   :::       ::::\n:::::    ::          ::\n::                   :::\n:::::::::::::::::::::\n:: ::::::::: :: ::\n:: :: :: ::  :: ::\n:::::::::::::`;
-    case "Thunderstorm": return `::::\n:::   :::::::\n::     :    ::   THUNDERSTORM\n::            :::\n::               :::\n::              :::\n:::::::::::::::\n:  :: :::  :\n::  :: ::::::  ::\n::  :::::  ::\n::`;
+    case "Clear": return `    ☼
+    CLEAR
+    Great Day to Touch Grass!!`;
+    case "Clouds": return `     ☁ 
+    CLOUDY
+    It may rain!`;
+    case "Rain": return `     ⛈
+    RAINING
+    Water might fall from the sky!!!`;
+    case "Thunderstorm": return `      ☈
+    THUNDERSTORM
+    I'd advice you to stay away from high areas!`;
     case "Snow": return "SNOW!";
     case "Mist": return "MISTY!";
     case "Fog": return "FOGGY";
