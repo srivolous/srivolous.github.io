@@ -150,7 +150,7 @@
 <div id="ikoons">Loading Weather</div>
 <img src="assets/1.webp" class="blend-img">
 <img src="assets/S9CS.gif" class="blend-img">
-<img src="assets/lofi.gif" class="blen2-img">
+<img src="assets/blue.gif" class="blen2-img">
 NEWS <br>
 <div id="news-feed"></div>
 <div class="name">__________________</div>
@@ -224,17 +224,17 @@ async function getWeather() {
 }
 function getIcon(condition) {
   switch(condition) {
-    case "Clear": return `    ☼
-    CLEAR
+    case "Clear": return ` ☼
+CLEAR
     Great Day to Touch Grass!!`;
-    case "Clouds": return `     ☁ 
-    CLOUDY
+    case "Clouds": return ` ☁ 
+CLOUDY
     Hope you packed your umbrella!`;
-    case "Rain": return `     ⛈
-    RAINING
+    case "Rain": return `  ⛈
+RAINING
     Grab a cup of tea, and sit tight! it is raining.`;
-    case "Thunderstorm": return `      ☈
-    THUNDERSTORM
+    case "Thunderstorm": return `  ☈
+THUNDERSTORM
     I'd advice you to stay away from high areas!`;
     case "Snow": return "SNOW!";
     case "Mist": return "MISTY!";
